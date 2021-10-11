@@ -1,5 +1,6 @@
 package com.cos.news.batch;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +19,8 @@ public class NewsBatch {
 	private final NewsRepository newsRepository;
 	private final NaverCraw naverCraw;
 	
-	@Scheduled(cron = "* 2 * * * *", zone = "Asia/Seoul")
+	//매일 1시에 실행 
+	@Scheduled(cron = "0 0 01 * * ?", zone = "Asia/Seoul")
 	public void newsCrowAndSave() {
 		List<News> newsList = naverCraw.collect();
 		newsRepository.saveAll(newsList);
@@ -26,3 +28,4 @@ public class NewsBatch {
 	
 
 }
+
